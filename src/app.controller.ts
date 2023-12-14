@@ -11,6 +11,7 @@ export class AppController {
   }
 
   trackingPullRequest(@Body() body) {
+    console.log(body);
     return this.appService.getHello();
   }
 }
