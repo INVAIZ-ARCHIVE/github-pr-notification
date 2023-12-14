@@ -25,8 +25,7 @@ export class AppController {
         const commenterLogin = body.comment.user.login;
         const message = `새로운 리뷰 댓글이 달렸습니다.\n리포지토리: ${body.repository.full_name}\nPR링크:${prUrl}\n내용: ${commentBody}\n작성자: ${commenterLogin}\n댓글링크: ${commentUrl}`;
         await this.appService.sendToGoogleChat(message);
-      }
-      if (body.issue && body.comment && body.issue.pull_request) {
+      } else if (body.issue && body.comment && body.issue.pull_request) {
         const commentUrl = body.comment.html_url; // Pull Request의 URL
         const commentBody = body.comment.body; // 댓글 내용
         const createUser = body.comment.user.login; // 댓글 작성자
