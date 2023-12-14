@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -10,8 +10,9 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  trackingPullRequest(@Body() body) {
-    console.log(body);
-    return this.appService.getHello();
+  @Post()
+  async handleWebhook(@Body() body: any) {
+    const message = `New Pull Request: ${body.pull_request.title}`;
+    await this.appService.sendToGoogleChat(message);
   }
 }
