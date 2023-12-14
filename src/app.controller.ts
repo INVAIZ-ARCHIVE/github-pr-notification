@@ -12,7 +12,6 @@ export class AppController {
 
   @Post('notification')
   async handleWebhook(@Body() body: any) {
-    console.log(body);
     try {
       if (body.action === 'created' && body.comment && body.pull_request) {
         console.log('pr review comment');
@@ -40,6 +39,8 @@ export class AppController {
       }
     } catch (e) {
       console.log(e);
+      console.log('------------------------------');
+      console.log(body);
       console.log('not found pr');
     }
   }
