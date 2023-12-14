@@ -31,11 +31,10 @@ export class AppController {
         body.action === 'created'
       ) {
         console.log('pr comment');
-
         const commentUrl = body.comment.html_url; // Pull Request의 URL
         const commentBody = body.comment.body; // 댓글 내용
         const createUser = body.comment.user.login; // 댓글 작성자
-        const message = `새로운 코멘트가 달렸습니다.\n리포지토리: ${body.repository.full_name}\n내용: **${commentBody}**\n작성자: ${createUser}\n댓글링크: ${commentUrl}`;
+        const message = `새로운 코멘트가 달렸습니다.\n리포지토리: ${body.repository.full_name}\n내용: ${commentBody}\n작성자: ${createUser}\n댓글링크: ${commentUrl}`;
         await this.appService.sendToGoogleChat(message);
       } else if (
         body.pull_request &&
