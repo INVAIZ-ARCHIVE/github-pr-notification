@@ -13,6 +13,7 @@ export class AppController {
   @Post('notification')
   async handleWebhook(@Body() body: any) {
     try {
+      console.log(body.pull_request);
       const message = `
       <users/118072138291656296236> <users/118072138291656296236> <users/103424272066547777775>
       새로운 PR이 등록되었습니다\n 
@@ -23,6 +24,7 @@ export class AppController {
       `;
       await this.appService.sendToGoogleChat(message);
     } catch (e) {
+      console.log(e);
       console.log('not found pr');
     }
   }
