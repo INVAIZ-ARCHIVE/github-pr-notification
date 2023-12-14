@@ -10,7 +10,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post()
+  @Post('notification')
   async handleWebhook(@Body() body: any) {
     const message = `New Pull Request: ${body.pull_request.title}`;
     await this.appService.sendToGoogleChat(message);
