@@ -14,7 +14,11 @@ export class AppController {
   async handleWebhook(@Body() body: any) {
     console.log(body);
     try {
-      if (body.action === 'created' && body.comment && body.pull_request) {
+      if (
+        body.payload.action === 'created' &&
+        body.payload.comment &&
+        body.payload.pull_request
+      ) {
         // Pull Request 리뷰 댓글 정보 출력
         const commentUrl = body.comment.html_url;
 
