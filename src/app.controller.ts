@@ -12,6 +12,7 @@ export class AppController {
 
   @Post('notification')
   async handleWebhook(@Body() body: any) {
+    console.log(body);
     try {
       if (body.pull_request.state === 'open') {
         const message = `<users/118072138291656296236> <users/118072138291656296236> <users/103424272066547777775>\n새로운 PR이 등록되었습니다\n 
