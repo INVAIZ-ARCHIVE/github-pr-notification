@@ -37,8 +37,7 @@ export class AppController {
         const message = `<users/118072138291656296236> <users/112473532277761238527> <users/103424272066547777775>\n새로운 PR이 등록되었습니다\n리포지토리: ${body.repository.full_name}\n링크: ${body.pull_request.html_url}\n제목: #${body.pull_request.number} ${body.pull_request.title}\n설명: ${body.pull_request.description}\n요청자: ${body.pull_request.user.login}`;
         await this.appService.sendToGoogleChat(message);
       } else {
-        console.log(body);
-        console.log(body.payload.action);
+        console.log(body.payload);
         console.log(body.comment);
         console.log(body.pull_request);
       }
