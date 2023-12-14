@@ -38,8 +38,9 @@ export class AppController {
         await this.appService.sendToGoogleChat(message);
       } else {
         console.log(body.payload);
-        console.log(body.comment);
-        console.log(body.pull_request);
+        console.log(body.payload.action);
+        console.log(body.payload.comment);
+        console.log(body.payload.pull_request);
       }
     } catch (e) {
       console.log(e);
