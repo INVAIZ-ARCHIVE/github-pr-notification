@@ -30,7 +30,7 @@ export class AppService {
     prUrl,
     userId,
   }: Comment) {
-    const message = `새로운 리뷰 댓글이 달렸습니다.\n리포지토리: ${repository_full_name}\n내용: ${commentBody}\n작성자: ${userId}\n댓글링크: ${commentUrl}\nPR링크:${prUrl}`;
+    const message = `새로운 리뷰 댓글이 달렸습니다.\n작성자: ${userId}\n내용: ${commentBody}\n리포지토리: ${repository_full_name}\n댓글링크: ${commentUrl}\nPR링크:${prUrl}`;
     return message;
   }
 
@@ -41,7 +41,7 @@ export class AppService {
     prUrl,
     userId,
   }: Comment) {
-    const message = `새로운 코멘트가 달렸습니다.\n리포지토리: ${repository_full_name}\n내용: ${commentBody}\n작성자: ${userId}\n댓글링크: ${commentUrl}\nPR링크:${prUrl}`;
+    const message = `새로운 코멘트가 달렸습니다.\n작성자: ${userId}\n내용: ${commentBody}\n리포지토리: ${repository_full_name}\n댓글링크: ${commentUrl}\nPR링크:${prUrl}`;
     return message;
   }
 
@@ -52,7 +52,7 @@ export class AppService {
     title,
     userId,
   }: PullRequest) {
-    const message = `병합완료✔✔ \n리포지토리: ${repository_full_name}\n링크: ${prUrl}\n제목: #${request_number} ${title}\n요청자: ${userId}`;
+    const message = `병합완료✔✔ \n요청자: ${userId}\n리포지토리: ${repository_full_name}\n제목: #${request_number} ${title}\n링크: ${prUrl}`;
     return message;
   }
 
@@ -63,7 +63,7 @@ export class AppService {
     title,
     userId,
   }: PullRequest) {
-    const message = `<users/118072138291656296236> <users/112473532277761238527> <users/103424272066547777775>\n새로운 PR이 등록되었습니다. 리뷰해주세요~ \n리포지토리: ${repository_full_name}\n요청자: ${userId}\n링크: ${prUrl}\n제목: #${request_number} ${title}`;
+    const message = `<users/118072138291656296236> <users/112473532277761238527> <users/103424272066547777775>\n새로운 PR이 등록되었습니다. 리뷰해주세요~ \n요청자: ${userId}\n제목: #${request_number} ${title}\n리포지토리: ${repository_full_name}\n링크: ${prUrl}`;
     return message;
   }
 
