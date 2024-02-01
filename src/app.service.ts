@@ -71,21 +71,16 @@ export class AppService {
     try {
       // new review
       if (body.action === 'created' && body.comment && body.pull_request) {
-        const commentUrl = body.comment.html_url;
-        // 리뷰 댓글 내용
-        const commentBody = body.comment.body;
-        const prUrl = body.pull_request.html_url;
-        // 리뷰 댓글 작성자 정보
-        const userId = body.comment.user.login;
-        const repository_full_name = body.repository.full_name;
-        const message = this.reviewComment({
-          repository_full_name,
-          commentUrl,
-          commentBody,
-          prUrl,
-          userId,
-        });
-        await this.sendToGoogleChat(message, prUrl);
+        const comment: Comment = {
+          repository_full_name: body.repository.full_name,
+          commentUrl: body.comment.html_url,
+          commentBody: body.comment.body,
+          prUrl: body.pull_request.html_url,
+          userId: body.pull_request.user.login,
+        };
+
+        const message = this.reviewComment(comment);
+        await this.sendToGoogleChat(message, comment.prUrl);
       }
 
       // new comment
@@ -95,22 +90,16 @@ export class AppService {
         body.issue.pull_request &&
         body.action === 'created'
       ) {
-        const commentUrl = body.comment.html_url;
-        // 리뷰 댓글 내용
-        const commentBody = body.comment.body;
-        const prUrl = body.pull_request.html_url;
-        // 리뷰 댓글 작성자 정보
-        const userId = body.comment.user.login;
-        const repository_full_name = body.repository.full_name;
+        const comment: Comment = {
+          repository_full_name: body.repository.full_name,
+          commentUrl: body.comment.html_url,
+          commentBody: body.comment.body,
+          prUrl: body.pull_request.html_url,
+          userId: body.pull_request.user.login,
+        };
 
-        const message = this.newComment({
-          repository_full_name,
-          commentUrl,
-          commentBody,
-          prUrl,
-          userId,
-        });
-        await this.sendToGoogleChat(message, prUrl);
+        const message = this.newComment(comment);
+        await this.sendToGoogleChat(message, comment.prUrl);
       }
 
       // new pr
@@ -119,20 +108,16 @@ export class AppService {
         body.pull_request.state === 'open' &&
         body.action === 'opened'
       ) {
-        const repository_full_name = body.repository.full_name;
-        const prUrl = body.pull_request.html_url;
-        const request_number = body.pull_request.number;
-        const title = body.pull_request.title;
-        const userId = body.pull_request.user.login;
+        const pullRequest: PullRequest = {
+          repository_full_name: body.repository.full_name,
+          prUrl: body.pull_request.html_url,
+          request_number: body.pull_request.number,
+          title: body.pull_request.title,
+          userId: body.pull_request.user.login,
+        };
 
-        const message = this.newPullRequest({
-          repository_full_name,
-          prUrl,
-          request_number,
-          title,
-          userId,
-        });
-        await this.sendToGoogleChat(message, prUrl);
+        const message = this.newPullRequest(pullRequest);
+        await this.sendToGoogleChat(message, pullRequest.prUrl);
       }
 
       // merge
@@ -141,24 +126,21 @@ export class AppService {
         body.pull_request.state === 'closed' &&
         body.pull_request.merged === true
       ) {
-        const repository_full_name = body.repository.full_name;
-        const prUrl = body.pull_request.html_url;
-        const request_number = body.pull_request.number;
-        const title = body.pull_request.title;
-        const userId = body.pull_request.user.login;
-        const message = this.mergeSucceeded({
-          repository_full_name,
-          prUrl,
-          request_number,
-          title,
-          userId,
-        });
-        await this.sendToGoogleChat(message, prUrl);
+        const pullRequest: PullRequest = {
+          repository_full_name: body.repository.full_name,
+          prUrl: body.pull_request.html_url,
+          request_number: body.pull_request.number,
+          title: body.pull_request.title,
+          userId: body.pull_request.user.login,
+        };
+
+        const message = this.mergeSucceeded(pullRequest);
+        await this.sendToGoogleChat(message, pullRequest.prUrl);
       }
     } catch (e) {
-      console.log(e);
       console.log('------------------------------');
-      console.log('not found pr');
+      console.log('Not found Pull Request: ', e.message);
+      console.log('------------------------------');
     }
   }
 
